@@ -76,6 +76,9 @@ public class Fuzzer {
                             String logMessage = String.format("Input: %s%nleads to a non-zero exit code with %noutput: %s.%n", input, output);
                             logWriter.write(logMessage); // Write to the file
                             logWriter.flush(); // Ensure it is saved
+
+                            // exit with 1 (non-zero) if one tof the generated inputs triggered a non-zero exit for the program
+                            System.exit(1);
                         }
 
                     } catch (IOException | InterruptedException e) {
@@ -86,6 +89,8 @@ public class Fuzzer {
         } catch (IOException e) {
             throw new RuntimeException("Failed to open log file", e);
         }
+        // exit with 0, if all runs returned 0
+        System.exit(0);
     }
 
     private static String readStreamIntoString(InputStream inputStream) {
