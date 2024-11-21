@@ -100,6 +100,8 @@ public class Fuzzer {
         mutations.addAll(mutateTags(seedInput));        // Dynamic tag mutations
         mutations.addAll(mutateAttributes(seedInput)); // Dynamic attribute mutations
         mutations.addAll(mutateContent(seedInput));    // Dynamic content mutations
+//        mutations.add("<html a=\"value\">..........................................................................................");
+//        mutations.add("<html a=\"value\">..........................................................................................</html>");
         return mutations;
     }
 
