@@ -102,9 +102,9 @@ public class Fuzzer {
 
     private static List<String> getMutatedInputs(String seedInput) {
         List<String> mutations = new ArrayList<>();
-        mutations.addAll(mutateTags(seedInput));        // Dynamic tag mutations
-        mutations.addAll(mutateAttributes(seedInput)); // Dynamic attribute mutations
-        mutations.addAll(mutateContent(seedInput));    // Dynamic content mutations
+//        mutations.addAll(mutateTags(seedInput));        // Dynamic tag mutations
+//        mutations.addAll(mutateAttributes(seedInput)); // Dynamic attribute mutations
+//        mutations.addAll(mutateContent(seedInput));    // Dynamic content mutations
 //        mutations.add("<html a=\"value\">..........................................................................................");
 //        mutations.add("<html a=\"value\">..........................................................................................</html>");
         return mutations;
