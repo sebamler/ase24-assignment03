@@ -49,7 +49,8 @@ public class Fuzzer {
     }
 
     private static void runCommand(ProcessBuilder builder, String seedInput, List<String> mutatedInputs) {
-        Stream.concat(Stream.of(seedInput), mutatedInputs.stream()).forEach(
+        try (BufferedWriter logWriter = new BufferedWriter(new FileWriter("non_zero_exit_codes.log", true))) { // Open log file
+            Stream.concat(Stream.of(seedInput), mutatedInputs.stream()).forEach(
                 input -> {
                     try {
                         Process process = builder.start();
@@ -71,13 +72,20 @@ public class Fuzzer {
                         if (exitCode != 0) {
                             System.out.println("\u001B[31m" + "Non-zero exit code detected!" + "\u001B[0m");
 
+                            // Log the input and output to the file
+                            String logMessage = String.format("Input: %s%nleads to a non-zero exit code with %noutput: %s.%n", input, output);
+                            logWriter.write(logMessage); // Write to the file
+                            logWriter.flush(); // Ensure it is saved
                         }
 
                     } catch (IOException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
-        );
+            );
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to open log file", e);
+        }
     }
 
     private static String readStreamIntoString(InputStream inputStream) {
